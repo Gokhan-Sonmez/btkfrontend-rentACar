@@ -1,0 +1,48 @@
+<main role="main" class="container">
+    <div
+      *ngIf="dataLoaded == false"
+      class="spinner-border text-primary"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <img src="https://www.bmw.com.tr/content/dam/bmw/common/all-models/3-series/sedan/2018/navigation/bmw-3-series-modellfinder.png" class="card-img-top" alt="...">
+      </div>
+    </div>
+    <div class="row">
+      <table class="table">
+        <thead>
+          <tr>
+           
+            <th scope="col">CarName</th>
+            <th scope="col">ModelYear</th>
+            <th scope="col">BrandName</th>
+            <th scope="col">ColorName</th>
+            <th scope="col">Description</th>
+            <th scope="col">Findex</th>
+            <th scope="col">DailyPrice</th>
+            <th scope="col">Rent</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ car.carName }}</td>
+            <td>{{ car.modelYear }}</td>
+            <td>{{ car.brandName }}</td>
+            <td>{{ car.colorName }}</td>
+            <td>{{ car.description }}</td>
+            <td>{{ car.findexScore}}</td>
+            <td>{{ car.dailyPrice | currency:"₺" }}</td>
+            <td></td>
+          </tr>
+    
+        </tbody>
+      </table>
+         
+       
+     
+    </div>
+  </main>
