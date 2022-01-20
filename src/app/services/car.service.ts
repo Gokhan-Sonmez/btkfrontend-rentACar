@@ -1,9 +1,11 @@
+import { CreateCarRequestModel } from './../models/createCarRequestModel';
+import { ResponseModel } from './../models/responseModel';
 import { SingleResponseModel } from './../models/singleResponseModel';
 import { CarListModel } from './../models/carListModel';
 import { ListResponseModel } from './../models/listResponseModel';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +46,33 @@ export class CarService {
       '&colorId=' +
       colorId;
     return this.httpClient.get<ListResponseModel<CarListModel>>(newPath);
+  }
+ 
+  addCar(car: CreateCarRequestModel): Observable<ResponseModel> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    let newPath = this.apiUrl + 'add';
+    return this.httpClient.post<ResponseModel>(newPath, car, httpOptions);
+  }
+  deleteCar(car: CreateCarRequestModel): Observable<ResponseModel> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    let newPath = this.apiUrl + 'delete';
+    return this.httpClient.post<ResponseModel>(newPath, car, httpOptions);
+  }
+  updateCar(car: CreateCarRequestModel): Observable<ResponseModel> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    let newPath = this.apiUrl + 'update';
+    return this.httpClient.post<ResponseModel>(newPath, car, httpOptions);
   }
 }
