@@ -1,6 +1,7 @@
+import { ResponseModel } from './../models/responseModel';
 import { BrandListModel } from './../models/brandListModel';
 import { ListResponseModel } from './../models/listResponseModel';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient ,HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -14,5 +15,35 @@ export class BrandService {
 
   getBrands():Observable<ListResponseModel<BrandListModel>>{
     return this.httpClient.get<ListResponseModel<BrandListModel>>(this.apiUrl+"getall")
+  }
+
+  addBrand(brand:BrandListModel): Observable<ResponseModel> {
+    const httpOptions ={
+      headers:new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    }
+    let newPath = this.apiUrl+ "add"
+    return this.httpClient.post<ResponseModel>(newPath,brand,httpOptions);
+  }
+
+  deleteBrand(brand:BrandListModel): Observable<ResponseModel> {
+    const httpOptions ={
+      headers:new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    }
+    let newPath = this.apiUrl+ "delete"
+    return this.httpClient.post<ResponseModel>(newPath,brand,httpOptions);
+  }
+
+  updateBrand(brand:BrandListModel): Observable<ResponseModel> {
+    const httpOptions ={
+      headers:new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    }
+    let newPath = this.apiUrl+ "update"
+    return this.httpClient.post<ResponseModel>(newPath,brand,httpOptions);
   }
 }

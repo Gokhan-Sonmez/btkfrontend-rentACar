@@ -1,3 +1,6 @@
+import { ColorAddComponent } from './components/color/color-add/color-add.component';
+import { BrandAddComponent } from './components/brand/brand-add/brand-add.component';
+import { CarAddComponent } from './components/car/car-add/car-add.component';
 import { CarDetailComponent } from './components/car/car-detail/car-detail.component';
 import { CarComponent } from './components/car/car.component';
 import { NgModule } from '@angular/core';
@@ -8,7 +11,10 @@ const routes: Routes = [
   {path:"cars",component:CarComponent},
   {path:"carDetail/:carId",component:CarDetailComponent},
   {path:"cars/brand/:brandId",component:CarComponent},
-  {path:"cars/color/:colorId",component:CarComponent}];
+  {path:"cars/color/:colorId",component:CarComponent},
+  {path:"cars/add", component:CarAddComponent},
+  {path:"brands/add", component:BrandAddComponent},
+  {path:"colors/add", component:ColorAddComponent},];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
