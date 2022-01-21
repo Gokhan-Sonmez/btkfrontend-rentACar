@@ -33,8 +33,8 @@ export class BrandService {
         'Content-Type':  'application/json',
       })
     }
-    let newPath = this.apiUrl+ "delete"
-    return this.httpClient.post<ResponseModel>(newPath,brand,httpOptions);
+    let newPath = this.apiUrl+ "delete/" + brand.id
+    return this.httpClient.delete<ResponseModel>(newPath,httpOptions);
   }
 
   updateBrand(brand:BrandListModel): Observable<ResponseModel> {

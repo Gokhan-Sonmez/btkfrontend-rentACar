@@ -57,13 +57,13 @@ export class CarService {
     let newPath = this.apiUrl + 'add';
     return this.httpClient.post<ResponseModel>(newPath, car, httpOptions);
   }
-  deleteCar(car: CreateCarRequestModel): Observable<ResponseModel> {
+  deleteCar(car: CarListModel): Observable<ResponseModel> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
-    let newPath = this.apiUrl + 'delete';
+    let newPath = this.apiUrl + 'delete/' + car.id;
     return this.httpClient.post<ResponseModel>(newPath, car, httpOptions);
   }
   updateCar(car: CreateCarRequestModel): Observable<ResponseModel> {

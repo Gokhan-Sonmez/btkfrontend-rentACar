@@ -92,10 +92,10 @@ export class CarAddComponent implements OnInit {
     }
   }
 
-  updateCar(car: CreateCarRequestModel) {
+  updateCar(carId:number) {
     if (this.carAddForm.valid) {
       let carModel = Object.assign({}, this.carAddForm.value);
-      carModel.carId = car.id;
+      carModel.carId = carId;
       carModel.brandId = parseInt(carModel.brandId.toString());
       carModel.colorId = parseInt(carModel.colorId.toString());
       carModel.carClassId = parseInt(carModel.carClassId.toString());
@@ -115,13 +115,13 @@ export class CarAddComponent implements OnInit {
    
   }
 
-  deleteCar(car: CreateCarRequestModel) {
-    this.carService.deleteCar(car).subscribe((response) => {
+   //deleteCar(carId:number) {
+    // this.carService.deleteCar().subscribe((response) => {
       
-    });
-    setTimeout(function () {
-      location.reload();
-    }, 100);
+   //  });
+   // setTimeout(function () {
+   //   location.reload();
+  //  }, 100);
    
   }
-}
+
