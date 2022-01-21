@@ -1,3 +1,4 @@
+import { RentalComponent } from './components/rental/rental.component';
 import { ColorAddComponent } from './components/color/color-add/color-add.component';
 import { BrandAddComponent } from './components/brand/brand-add/brand-add.component';
 import { CarAddComponent } from './components/car/car-add/car-add.component';
@@ -14,7 +15,10 @@ const routes: Routes = [
   {path:"cars/color/:colorId",component:CarComponent},
   {path:"cars/add", component:CarAddComponent},
   {path:"brands/add", component:BrandAddComponent},
-  {path:"colors/add", component:ColorAddComponent},];
+  {path:"colors/add", component:ColorAddComponent},
+  {path:"rentals", component:RentalComponent},
+  
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
