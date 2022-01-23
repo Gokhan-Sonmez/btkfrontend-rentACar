@@ -1,3 +1,6 @@
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RentalService } from './../../services/rental.service';
+import { RentalListModel } from './../../models/rentalListModel';
 import { CarService } from './../../services/car.service';
 import { IndividualCustomerModel } from './../../models/individualCustomerModel';
 import { CarListModel } from './../../models/carListModel';
@@ -11,58 +14,52 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RentalComponent implements OnInit {
   title = 'Rentals Detail List';
-  car: CarListModel;
-  customers: IndividualCustomerModel[]=[];
   cars:CarListModel[]=[];
-  userId:number;
-
- // rental: Rental = new Rental();
-  rentDate: Date;
-  returnDate: Date;
-  customerId: number;
-  rentable: boolean = true;;
-  firstDateSelected: boolean = false;
-  minDate: string | null;
-  maxDate: string | null;
-  findex:boolean;
+  carId:number;
+  customers: IndividualCustomerModel[]=[];
+  customerId:any;
+  addLoading=false;
+  activeRental:RentalListModel 
+  returnDate:Date;
+  totalPrice:number;
+  isCardDetailSaved=false;
+  paymentLoading=false;
+  status:string='rental';
+ 
   constructor(
   
     private carService: CarService,
+    private rentalService:RentalService,
     private activatedRoute: ActivatedRoute,
-
     private router: Router,
+   
+
  
   ) { }
 
   ngOnInit(): void {
+
+   
   }
 
-  setFindeks(){
-    
+  rentalAddForm = new FormGroup({
+    rentDate: new FormControl("",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]),
+    returnDate: new FormControl("",[Validators.required,]),
+  })
+  clearRentalAddForm() {
+    this.rentalAddForm.patchValue({
+      rentDate: '',
+      returnDate:'',
+    });
   }
 
-  checkFindeks(carId:number,customerId:number){
 
 
-  }
-  onChangeEvent(event: any) {
-    this.minDate = event.target.value;
-    this.firstDateSelected = true;
-  }
+
+ 
 
   addRental() {
-    let RentalModel = {
-      customerId: this.customerId,
-      carId: this.car.id,
-      rentDate: this.rentDate,
-      returnDate: this.returnDate,
-      status: !this.rentable
-    }
-    
- 
-      this.router.navigate(['/cars/rental/payment/', JSON.stringify(RentalModel)]);
-      //this.router.navigate(['cars/rental/payment/', JSON.stringify(CarModel)]);
-     // this.router.navigate(['cars/rental/payment/', JSON.stringify(CustomerModel)]);
+   
      
    
   }

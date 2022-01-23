@@ -14,6 +14,4 @@ export interface RentalListModel{
 	returnDate:number;
 
 	rentedKilometer:number;
-
-	returnKilometer:number;
 }

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from "@angular/common/http"
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule} from "@angular/platform-browser/animations" 
-
+import { DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { NaviComponent } from './components/navi/navi.component';
 import { CarAddComponent } from './components/car/car-add/car-add.component';
 import { BrandAddComponent } from './components/brand/brand-add/brand-add.component';
 import { ColorAddComponent } from './components/color/color-add/color-add.component';
+import { CarFilterComponent } from './components/car/car-filter/car-filter.component';
 
 
 
@@ -33,7 +34,8 @@ import { ColorAddComponent } from './components/color/color-add/color-add.compon
     NaviComponent,
     CarAddComponent,
     BrandAddComponent,
-    ColorAddComponent
+    ColorAddComponent,
+    CarFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,7 @@ import { ColorAddComponent } from './components/color/color-add/color-add.compon
     
    
   ],
-  providers: [],
+  providers:[DatePipe] ,
   bootstrap: [AppComponent]
 })
 export class AppModule {

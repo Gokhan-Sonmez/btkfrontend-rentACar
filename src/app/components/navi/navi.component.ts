@@ -1,3 +1,4 @@
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navi.component.css']
 })
 export class NaviComponent implements OnInit {
+  loginForm:FormGroup;
+  constructor(
+    private formBuilder:FormBuilder
+  ) { }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit( ): void {
+    this.createLoginForm();
   }
 
+
+
+  createLoginForm(){
+    this.loginForm = this.formBuilder.group({
+      email:["",Validators.required],
+      password:["",Validators.required]
+    })
+
+  }
 }

@@ -10,27 +10,31 @@
 </div>
 
 <div>
-
+  <app-car-filter></app-car-filter>
 <div class="row">
   <div
     *ngFor="let car of cars filterText" class="card" style="width: 18rem">
-  
-    <img src="https://www.bmw.com.tr/content/dam/bmw/common/all-models/3-series/sedan/2018/navigation/bmw-3-series-modellfinder.png" class="card-img-top" alt="...">
+    <img  src="{{car.imagePath}}" class="card-img-top" alt="{{ car.brandName }}-{{ car.carName }}" width="100%" height="200">
+    
     <div class="card-body">
       <h5 class="card-title">{{ car.carName }} {{car.modelYear}}</h5>
-      <p class="card-text">
-       Brand: {{ car.brandName }} 
-       Color: {{ car.colorName }}
-       Description: {{car.description}} 
-       Price: {{ car.dailyPrice |currency:"₺" }}
-      </p>
-      <div class="d-flex justify-content-between">
-        <div>
-   
-        </div>
-        <div>
-          <a routerLink="/carDetail/{{ car.id }}" class="btn btn-primary mx-auto">Detaylar..</a>
-        </div>
+     
+
+        <ul class="card-text list-group list-group-flush">
+
+          <li class="list-group-item">Renk: {{car.colorName}} </li>
+          <li class="list-group-item">Marka: {{car.brandName}}</li>
+          <li class="list-group-item">Şehir: {{car.cityName}}</li>
+          <li class="list-group-item">Açıklama: {{car.description}}</li>
+          <li class="list-group-item">Günlük Fiyat: {{car.dailyPrice |currency:"₺"}} </li>
+          <li class="list-group-item"></li>
+        </ul>
+
+      
+        <div class="d-grid gap-2 col-8 mx-auto">
+     
+          <a routerLink="/carDetail/{{ car.id }}" class="btn btn-primary">Detaylar</a>
+      
    </div>
       
         
