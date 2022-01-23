@@ -23,7 +23,17 @@
                 placeholder="Kiralama Başlangıç Tarihi" />
             </div>
           </div>
-         
+          <form [formGroup]="promoCodeForm">
+            <div class="mb-3">
+              <label for="promoCode">Promosyon Kodu</label>
+              <div class="form-group">
+                <input type="text" id="code" formControlName="code" class="form-control" placeholder="Promosyon Kodu" />
+              </div>
+              <button class="btn btn-primary" (click)="getPromoCodeByCode(promoCodeForm.get('code').value)" >
+                Uygula
+              </button>
+            </div>
+          </form>
         </form>
       </div>
       <div class="card-footer">

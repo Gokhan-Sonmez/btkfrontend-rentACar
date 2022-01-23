@@ -1,3 +1,5 @@
+import { PromoCodeService } from './../../services/promo-code.service';
+import { PromoCodeListModel } from './../../models/promoCodeListModel';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RentalService } from './../../services/rental.service';
 import { RentalListModel } from './../../models/rentalListModel';
@@ -25,9 +27,9 @@ export class RentalComponent implements OnInit {
   isCardDetailSaved=false;
   paymentLoading=false;
   status:string='rental';
- 
+  promoCode: PromoCodeListModel;
   constructor(
-  
+    private promoCodeService:PromoCodeService,
     private carService: CarService,
     private rentalService:RentalService,
     private activatedRoute: ActivatedRoute,
@@ -39,7 +41,7 @@ export class RentalComponent implements OnInit {
 
   ngOnInit(): void {
 
-   
+    
   }
 
   rentalAddForm = new FormGroup({
@@ -53,15 +55,39 @@ export class RentalComponent implements OnInit {
     });
   }
 
+  promoCodeForm = new FormGroup({
+    code: new FormControl("",[Validators.maxLength(30)])
+  })
 
+  additionalServiceAddForm = new FormGroup({
+    additionalServiceitem: new FormControl("",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]),
+  })
 
 
  
 
   addRental() {
+    if (this.rentalAddForm.valid) {
+      let rentalModel = Object.assign({}, this.rentalAddForm.value);
    
+     this.rentalService.addRentalforindividiualcustomer(rentalModel).subscribe(response =>{
      
+    }
+    )
    
+  }}
+
+  getPromoCodeByCode (code:string){
+    this.promoCodeService.getByCode(code).subscribe(response =>{
+      if(response.success){
+        console.log(response.data)
+        this.promoCode=response.data;
+       
+        
+      }
+    }
+    )
+
   }
   
 
