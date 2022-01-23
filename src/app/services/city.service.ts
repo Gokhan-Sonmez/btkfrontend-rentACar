@@ -18,7 +18,7 @@ export class CityService {
     return this.httpClient.get<ListResponseModel<CityListModel>>(this.apiUrl+"getall")
   }
 
-  getCarsById(cityId: number): Observable<SingleResponseModel<CityListModel>> {
+  getCityById(cityId: number): Observable<SingleResponseModel<CityListModel>> {
     let newPath = this.apiUrl + 'getById?cityId=' + cityId;
     return this.httpClient.get<SingleResponseModel<CityListModel>>(newPath);
   }

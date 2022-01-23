@@ -1,3 +1,4 @@
+import { SingleResponseModel } from './../models/singleResponseModel';
 import { ListResponseModel } from './../models/listResponseModel';
 import { CarClassListModel } from './../models/carClassListModel';
 import { HttpClient } from '@angular/common/http';
@@ -15,5 +16,10 @@ export class CarClassService {
 
   getCarClasses():Observable<ListResponseModel<CarClassListModel>>{
     return this.httpClient.get<ListResponseModel<CarClassListModel>>(this.apiUrl+"getall")
+  }
+
+  getCarClassById(carClassId: number): Observable<SingleResponseModel<CarClassListModel>> {
+    let newPath = this.apiUrl + 'getById?carClassId=' + carClassId;
+    return this.httpClient.get<SingleResponseModel<CarClassListModel>>(newPath);
   }
 }
