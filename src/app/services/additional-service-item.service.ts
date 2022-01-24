@@ -18,10 +18,10 @@ export class AdditionalServiceItemService {
 
 
   getAll(): Observable<ListResponseModel<AdditionalServiceItemListModel>> {
-    return this.httpClient.get<ListResponseModel<AdditionalServiceItemListModel>>(this.apiUrl + "find-all")
+    return this.httpClient.get<ListResponseModel<AdditionalServiceItemListModel>>(this.apiUrl + "getall")
   }
   getById(id: number): Observable<SingleResponseModel<AdditionalServiceItemListModel>> {
-    return this.httpClient.get<SingleResponseModel<AdditionalServiceItemListModel>>(this.apiUrl + "find-by-id/" + id)
+    return this.httpClient.get<SingleResponseModel<AdditionalServiceItemListModel>>(this.apiUrl + "getById/" + id)
   }
   add(model: CreateAdditionalServiceItemModel): Observable<ResponseModel> {
     return this.httpClient.post<ResponseModel>(this.apiUrl + "add", model)

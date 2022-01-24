@@ -82,7 +82,32 @@
           </div>
         </div>
       </div>
+      <!-- Additional Service-->
+  <div class="container md-2">
+    <div class="row">
+      <div *ngIf="status=='service'" class="card">
+        <div class="card-header">
+          <h5 class="title">Ek Servisler</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li *ngFor="let additionalServiceItem of additionalServiceItems" class="list-group-item">
+              {{additionalServiceItem.name}} {{additionalServiceItem.price | currency:'TRY'}}
+              <button *ngIf="!isBasketContainItem(additionalServiceItem.id)" class="btn btn-success"
+                (click)="addAdditionalServiceItem(additionalServiceItem.id)"><i class="fas fa-plus-square"></i></button>
+              <button *ngIf="isBasketContainItem(additionalServiceItem.id)" class="btn btn-danger"
+                (click)="removeAdditionalServiceItem(additionalServiceItem.id)"><i
+                  class="far fa-trash-alt"></i></button>
+            </li>
+          </ul>
+          <button class="btn btn-success" >Ödemeye Geç</button>
+        </div>
+
+      </div>
     </div>
+  </div>
+    </div>
+
     <div class="col-4">
       <!-- Summary-->
       <div *ngIf="car" class="card" style="width: 22rem">

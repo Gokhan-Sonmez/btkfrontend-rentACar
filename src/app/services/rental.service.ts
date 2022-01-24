@@ -20,7 +20,11 @@ export class RentalService {
     return this.httpClient.get<ListResponseModel<RentalListModel>>(this.apiUrl+"getall")
   }
   getRentalById(rentalId: number): Observable<SingleResponseModel<RentalListModel>> {
-    let newPath = this.apiUrl + 'getById?rentalId=' + rentalId;
+    let newPath = this.apiUrl + 'getByRentalId?rentalId=' + rentalId;
+    return this.httpClient.get<SingleResponseModel<RentalListModel>>(newPath);
+  }
+  getRentalCarById(carId: number): Observable<SingleResponseModel<RentalListModel>> {
+    let newPath = this.apiUrl + 'getRentalByCarId?carId=' + carId;
     return this.httpClient.get<SingleResponseModel<RentalListModel>>(newPath);
   }
 

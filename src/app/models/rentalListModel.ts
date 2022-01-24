@@ -1,4 +1,5 @@
 export interface RentalListModel{
+	id:number
     customerId:number;
 
 	carId:number;
