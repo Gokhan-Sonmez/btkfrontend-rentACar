@@ -1,7 +1,7 @@
 import { CarService } from './../../../services/car.service';
 import { CarListModel } from './../../../models/carListModel';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +14,8 @@ export class CarDetailComponent implements OnInit {
   car: CarListModel;
   dataLoaded = false;
   constructor(private carService: CarService,
-    private activetedRoute: ActivatedRoute) { }
+    private activetedRoute: ActivatedRoute,
+    private linkRouter:Router,) { }
 
   ngOnInit(): void {
        this.activetedRoute.params.subscribe((params) => {
@@ -34,4 +35,14 @@ export class CarDetailComponent implements OnInit {
       console.log(this.car)
     });
   }
+
+  rentCar(carId:number):void{
+    
+      
+      this.linkRouter.navigateByUrl('/rentals/'+carId);
+   
+   
+  }
+
+  
 }

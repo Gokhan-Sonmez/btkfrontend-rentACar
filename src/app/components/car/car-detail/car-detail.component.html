@@ -39,7 +39,7 @@
             <td>{{ car.description }}</td>
             <td>{{ car.findexScore}}</td>
             <td>{{ car.dailyPrice | currency:"₺" }}</td>
-            <td><a routerLink="/rentals/" class="btn btn-primary">Kirala</a></td>
+            <td><a (click)="rentCar(car.id)" class="btn btn-primary">Kirala</a></td>
           </tr>
     
         </tbody>

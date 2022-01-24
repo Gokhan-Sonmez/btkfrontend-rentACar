@@ -1,53 +1,111 @@
-<div class="container ">
+<div class="container">
   <div class="row">
     <div class="col-8">
-  <!-- Rental -->
-  <div class="container md-2">
-    <div *ngIf="status=='rental'" class="card">
-      <div class="card-header">
-        <h5 class="title">Araç Kiralama</h5>
-      </div>
-      <div class="card-body">
-        <form [formGroup]="rentalAddForm">
-          <div class="mb-3">
-            <label for="rentDate">Kiralama Başlangıç Tarihi</label>
-            <div class="form-group">
-              <input type="date" id="rentDate" formControlName="rentDate" class="form-control"
-                placeholder="Kiralama Başlangıç Tarihi" />
-            </div>
+      <!-- Rental -->
+      <div class="container md-2">
+        <div *ngIf="status == 'rental'" class="card">
+          <div class="card-header">
+            <h5 class="title">Araç Kiralama</h5>
           </div>
-          <div class="mb-3">
-            <label for="returnDate">Kiralama Bitiş Tarihi</label>
-            <div class="form-group">
-              <input type="date" id="returnDate" formControlName="returnDate" class="form-control"
-                placeholder="Kiralama Başlangıç Tarihi" />
-            </div>
-          </div>
-          <form [formGroup]="promoCodeForm">
-            <div class="mb-3">
-              <label for="promoCode">Promosyon Kodu</label>
-              <div class="form-group">
-                <input type="text" id="code" formControlName="code" class="form-control" placeholder="Promosyon Kodu" />
+          <div class="card-body">
+            <form [formGroup]="rentalAddForm">
+              <div class="mb-3">
+                <label for="rentDate">Kiralama Başlangıç Tarihi</label>
+                <div class="form-group">
+                  <input
+                    type="date"
+                    id="rentDate"
+                    formControlName="rentDate"
+                    class="form-control"
+                    placeholder="Kiralama Başlangıç Tarihi"
+                  />
+                </div>
               </div>
-              <button class="btn btn-primary" (click)="getPromoCodeByCode(promoCodeForm.get('code').value)" >
-                Uygula
-              </button>
-            </div>
-          </form>
-        </form>
+              <div class="mb-3">
+                <label for="returnDate">Kiralama Bitiş Tarihi</label>
+                <div class="form-group">
+                  <input
+                    type="date"
+                    id="returnDate"
+                    formControlName="returnDate"
+                    class="form-control"
+                    placeholder="Kiralama Başlangıç Tarihi"
+                  />
+                </div>
+              </div>
+              <form [formGroup]="promoCodeForm">
+                <div class="mb-3">
+                  <label for="promoCode">Promosyon Kodu</label>
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      id="code"
+                      formControlName="code"
+                      class="form-control"
+                      placeholder="Promosyon Kodu"
+                    />
+                  </div>
+                  <button
+                    class="btn btn-primary"
+                    (click)="
+                      getPromoCodeByCode(promoCodeForm.get('code').value)
+                    "
+                  >
+                    Uygula
+                  </button>
+                </div>
+              </form>
+            </form>
+          </div>
+          <div class="card-footer">
+            <button
+              *ngIf="!addLoading"
+              class="btn btn-fill btn-primary"
+              (click)="addRental()"
+              [disabled]="rentalAddForm.invalid"
+            >
+              Devam Et
+            </button>
+            <button
+              *ngIf="addLoading"
+              class="btn btn-primary"
+              type="button"
+              disabled
+            >
+              <span
+                class="spinner-grow spinner-grow-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Gönderiliyor...
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="card-footer">
-        <button *ngIf="!addLoading" class="btn btn-fill btn-primary" (click)="addRental()" [disabled]="rentalAddForm.invalid">Devam Et</button>
-        <button *ngIf="addLoading" class="btn btn-primary" type="button" disabled>
-          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-          Gönderiliyor...
-        </button>
+    </div>
+    <div class="col-4">
+      <!-- Summary-->
+      <div *ngIf="car" class="card" style="width: 22rem">
+        <img src="{{ car.imagePath }}" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{ car.brandName }} {{ car.carName }}</h5>
+          <p class="card-text">{{ car.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Renk: {{ car.colorName }}</li>
+          <li class="list-group-item">Model: {{ car.brandName }}</li>
+          <li class="list-group-item">
+            Günlük Fiyat: {{ car.dailyPrice + " TRY" }}
+          </li>
+          <li class="list-group-item">Bulunduğu Şehir: {{ car.cityName }}</li>
+          <li class="list-group-item">
+            Minimum Kiralama Yaşı: {{ car.minAge }}
+          </li>
+          <li class="list-group-item">
+            Minimum Findex Skoru: {{ car.findexScore }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
-  
-
-
-
-
 </div>

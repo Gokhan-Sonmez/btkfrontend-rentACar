@@ -16,16 +16,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RentalComponent implements OnInit {
   title = 'Rentals Detail List';
+  car: CarListModel;
   cars:CarListModel[]=[];
   carId:number;
-  customers: IndividualCustomerModel[]=[];
-  customerId:any;
+ 
   addLoading=false;
   activeRental:RentalListModel 
   returnDate:Date;
-  totalPrice:number;
-  isCardDetailSaved=false;
-  paymentLoading=false;
+
+  
   status:string='rental';
   promoCode: PromoCodeListModel;
   constructor(
@@ -41,8 +40,18 @@ export class RentalComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.activatedRoute.params.subscribe((params) => {
+      console.log(params['carId'])
+      this.getCarById(params['carId']);
+     
+  });
+
     
-  }
+  
+
+
+ 
+}
 
   rentalAddForm = new FormGroup({
     rentDate: new FormControl("",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]),
@@ -90,5 +99,12 @@ export class RentalComponent implements OnInit {
 
   }
   
-
+  getCarById(carId: number) {
+    this.carService.getCarsById(carId).subscribe((response) => {
+   
+      this.car = response.data;
+    
+      //console.log(this.car)
+    });
+  }
 }
