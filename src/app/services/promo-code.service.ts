@@ -24,6 +24,11 @@ export class PromoCodeService {
   }
 
   getByCode(code:string): Observable<SingleResponseModel<PromoCodeListModel>>{ 
+
+    if(code=="")
+    {
+      code="bos"
+    }
     return this.httpClient.get<SingleResponseModel<PromoCodeListModel>>(this.apiUrl+"getByCode/"+code)
   }
 
@@ -33,6 +38,7 @@ export class PromoCodeService {
         'Content-Type':  'application/json',
       })
     }
+    
     let newPath = this.apiUrl+ "add"
     return this.httpClient.post<ResponseModel>(newPath,promoCode,httpOptions);
   }

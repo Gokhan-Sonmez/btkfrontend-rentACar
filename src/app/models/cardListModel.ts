@@ -6,7 +6,8 @@ export interface CardListModel {
 
   nameOnTheCard: String;
 
-  expirationDate: String;
+  month:String;
+  year:String;
 
   cvv: number;
 }

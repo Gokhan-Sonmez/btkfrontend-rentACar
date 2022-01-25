@@ -1,3 +1,5 @@
+import { PaymentService } from './../../services/payment.service';
+import { TotalPriceRequestModel } from './../../models/totalPriceRequestModel';
 import { SingleResponseModel } from './../../models/singleResponseModel';
 import { AdditionalServiceService } from './../../services/additional-service.service';
 import { CreateAdditionalServiceModel } from './../../models/createAdditionalServiceRequestModel';
@@ -13,6 +15,8 @@ import { IndividualCustomerModel } from './../../models/individualCustomerModel'
 import { CarListModel } from './../../models/carListModel';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-rental',
@@ -29,7 +33,7 @@ export class RentalComponent implements OnInit {
   addLoading = false;
   activeRental: RentalListModel;
   returnDate: Date;
-
+  totalPrice: number;
   status: string = 'rental';
   promoCode: PromoCodeListModel;
   constructor(
@@ -37,9 +41,10 @@ export class RentalComponent implements OnInit {
     private carService: CarService,
     private rentalService: RentalService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
+    private toastrService: ToastrService,
     private additionalServiceService: AdditionalServiceService,
-    private additionalServiceItemService: AdditionalServiceItemService
+    private additionalServiceItemService: AdditionalServiceItemService,
+    private paymentService: PaymentService,
   ) {}
 
   ngOnInit(): void {
@@ -86,23 +91,33 @@ export class RentalComponent implements OnInit {
       if (this.promoCode == null) {
         rentalModel.promoCodeId = 2;
       }
-      rentalModel.promoCodeId = this.promoCode.id;
+      else
+      {
+        rentalModel.promoCodeId = this.promoCode.id;
+      }
+      
       rentalModel.carId = this.carId;
       console.log(rentalModel);
-      this.rentalService
-        .addRentalforindividiualcustomer(rentalModel)
+      this.rentalService.addRentalforindividiualcustomer(rentalModel)
         .subscribe((response) => {
+          if (response.success) {
           this.returnDate = this.rentalAddForm.get('returnDate').value;
-       
           this.addLoading = false;
-          this.status = 'service';
           this.getRentalCarById(this.carId);
+          this.status = 'service';   
           console.log(rentalModel)
+             } 
+        else 
+        {
+          this.toastrService.warning(response.message, 'Başarısız');
+          this.addLoading = false;
+        }
         });
     }
   }
 
   getPromoCodeByCode(code: string) {
+    
     this.promoCodeService.getByCode(code).subscribe((response) => {
       if (response.success) {
         console.log(response.data);
@@ -130,9 +145,13 @@ export class RentalComponent implements OnInit {
 
   getAdditionalServiceItems() {
     this.additionalServiceItemService.getAll().subscribe((response) => {
+      if (response.success) {
       this.additionalServiceItems = response.data;
 
       console.log(this.additionalServiceItems);
+    } else {
+      this.toastrService.warning(response.message, 'Başarısız');
+    }
     });
   }
   addAdditionalServices() {
@@ -164,13 +183,14 @@ export class RentalComponent implements OnInit {
       rentalId: this.activeRental.id,
       additionalServiceItemId: id,
     };
-
+    this.toastrService.success('Eklendi', 'Başarılı');
     this.additionalServiceItemBasket.push(model);
   }
   removeAdditionalServiceItem(id: number) {
     this.additionalServiceItemBasket = this.additionalServiceItemBasket.filter(
       (model) => model.additionalServiceItemId !== id
     );
+    this.toastrService.error('Çıkarıldı', 'Başarılı');
   }
 
   isBasketContainItem(id: number): boolean {
@@ -182,17 +202,25 @@ export class RentalComponent implements OnInit {
       return true;
     } else return false;
   }
+  calculateTotalPrice() {
+    const model: TotalPriceRequestModel = {
+      rentalId: this.activeRental.id,
+      returnDate: this.rentalAddForm.get('returnDate').value,
+    };
 
-  /* calculateTotalPrice(){
-    const model: TotalPriceRequestModel= {rentalId:this.activeRental.id,returnDate:this.rentalAddForm.get('returnDate').value}
-      
-      this.paymentService.calculateTotalPrice(model).subscribe(response =>{
-        if(response.success){
-       
-          this.totalPrice=response.data;
+    this.paymentService.calculateTotalPrice(model).subscribe(
+      (response) => {
+        if (response.success) {
+          this.toastrService.success('Toplam Ücret: ' + response.data, 'Başarılı');
+          this.totalPrice = response.data;
+        } else {
+          this.toastrService.warning(response.message, 'Başarısız');
         }
-    
-      }, 
-      )
-     }*/
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.toastrService.error(errorResponse.message, 'Başarısız');
+      }
+    );
+  }
+ 
 }

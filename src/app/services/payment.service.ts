@@ -1,3 +1,4 @@
+import { TotalPriceRequestModel } from './../models/totalPriceRequestModel';
 import { ResponseModel } from './../models/responseModel';
 import { SingleResponseModel } from './../models/singleResponseModel';
 import { PaymentListModel } from './../models/paymentListModel';
@@ -51,5 +52,11 @@ export class PaymentService {
     }
     let newPath = this.apiUrl+ "update"
     return this.httpClient.post<ResponseModel>(newPath,payment,httpOptions);
+  }
+
+  calculateTotalPrice(totalPriceRequestModel: TotalPriceRequestModel): Observable<SingleResponseModel<number>> {
+    return this.httpClient.post<SingleResponseModel<number>>(
+      this.apiUrl + 'getTotalPrice', totalPriceRequestModel
+    );
   }
 }

@@ -12,49 +12,28 @@
               <div class="mb-3">
                 <label for="rentDate">Kiralama Başlangıç Tarihi</label>
                 <div class="form-group">
-                  <input
-                    type="date"
-                    id="rentDate"
-                    formControlName="rentDate"
-                    class="form-control"
-                    placeholder="Kiralama Başlangıç Tarihi"
-                  />
+                  <input type="date" id="rentDate" formControlName="rentDate" class="form-control"
+                    placeholder="Kiralama Başlangıç Tarihi" />
                 </div>
               </div>
               <div class="mb-3">
                 <label for="returnDate">Kiralama Bitiş Tarihi</label>
                 <div class="form-group">
-                  <input
-                    type="date"
-                    id="returnDate"
-                    formControlName="returnDate"
-                    class="form-control"
-                    placeholder="Kiralama Başlangıç Tarihi"
-                  />
+                  <input type="date" id="returnDate" formControlName="returnDate" class="form-control"
+                    placeholder="Kiralama Başlangıç Tarihi" />
                 </div>
               </div>
               <form [formGroup]="promoCodeForm">
                 <div class="mb-3">
                   <label for="promoCode">Promosyon Kodu</label>
                   <div class="form-group">
-                    <input
-                      type="text"
-                      id="code"
-                      formControlName="code"
-                      class="form-control"
-                      placeholder="Promosyon Kodu"
-                    />
-
-                    <div *ngIf="promoCode.code" class="alert alert-success">
-                      {{promoCode.code}} uygulandı.
-                    </div>
+                    <input type="text" id="code" formControlName="code" class="form-control"
+                      placeholder="Promosyon Kodu" />
                   </div>
-                  <button
-                    class="btn btn-primary"
-                    (click)="
-                      getPromoCodeByCode(promoCodeForm.get('code').value)
-                    "
-                  >
+                  <button class="btn btn-primary" (click)="getPromoCodeByCode(
+                    promoCodeForm.get('code').value
+                    
+                    )">
                     Uygula
                   </button>
                 </div>
@@ -62,54 +41,42 @@
             </form>
           </div>
           <div class="card-footer">
-            <button
-              *ngIf="!addLoading"
-              class="btn btn-fill btn-primary"
-              (click)="addRental()"
-              [disabled]="rentalAddForm.invalid"
-            >
+            <button *ngIf="!addLoading" class="btn btn-fill btn-primary" (click)="addRental()"
+              [disabled]="rentalAddForm.invalid">
               Devam Et
             </button>
-            <button
-              *ngIf="addLoading"
-              class="btn btn-primary"
-              type="button"
-              disabled
-            >
-              <span
-                class="spinner-grow spinner-grow-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
+            <button *ngIf="addLoading" class="btn btn-primary" type="button" disabled>
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
               Gönderiliyor...
             </button>
           </div>
         </div>
       </div>
       <!-- Additional Service-->
-  <div class="container md-2">
-    <div class="row">
-      <div *ngIf="status=='service'" class="card">
-        <div class="card-header">
-          <h5 class="title">Ek Servisler</h5>
-        </div>
-        <div class="card-body">
-          <ul class="list-group">
-            <li *ngFor="let additionalServiceItem of additionalServiceItems" class="list-group-item">
-              {{additionalServiceItem.name}} {{additionalServiceItem.price | currency:'TRY'}}
-              <button *ngIf="!isBasketContainItem(additionalServiceItem.id)" class="btn btn-success"
-                (click)="addAdditionalServiceItem(additionalServiceItem.id)"><i class="fas fa-plus-square"></i></button>
-              <button *ngIf="isBasketContainItem(additionalServiceItem.id)" class="btn btn-danger"
-                (click)="removeAdditionalServiceItem(additionalServiceItem.id)"><i
-                  class="far fa-trash-alt"></i></button>
-            </li>
-          </ul>
-          <button class="btn btn-success" >Ödemeye Geç</button>
-        </div>
+      <div class="container md-2">
+        <div class="row">
+          <div *ngIf="status=='service'" class="card">
+            <div class="card-header">
+              <h5 class="title">Ek Servisler</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-group">
+                <li *ngFor="let additionalServiceItem of additionalServiceItems" class="list-group-item">
+                  {{additionalServiceItem.name}} {{additionalServiceItem.price | currency:'TRY'}}
+                  <button *ngIf="!isBasketContainItem(additionalServiceItem.id)" class="btn btn-success"
+                    (click)="addAdditionalServiceItem(additionalServiceItem.id)"><i
+                      class="fas fa-plus-square"></i></button>
+                  <button *ngIf="isBasketContainItem(additionalServiceItem.id)" class="btn btn-danger"
+                    (click)="removeAdditionalServiceItem(additionalServiceItem.id)"><i
+                      class="far fa-trash-alt"></i></button>
+                </li>
+              </ul>
+              <button class="btn btn-success">Ödemeye Geç</button>
+            </div>
 
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
     </div>
 
     <div class="col-4">
