@@ -84,7 +84,7 @@ export class RentalComponent implements OnInit {
 
       rentalModel.customerId = 1;
       if (this.promoCode == null) {
-        rentalModel.promoCodeId = 7;
+        rentalModel.promoCodeId = 2;
       }
       rentalModel.promoCodeId = this.promoCode.id;
       rentalModel.carId = this.carId;

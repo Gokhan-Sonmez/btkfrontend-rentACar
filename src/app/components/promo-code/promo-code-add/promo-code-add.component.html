@@ -1,1 +1,89 @@
-<p>promo-code-add works!</p>
+<div class="content">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header"><h5 class="title">promoCode add / update</h5></div>
+            <div class="card-body">
+
+                <form [formGroup]="promoCodeAddForm">
+
+                    <div class="mb-3">
+                    
+                        <div class="form-group">
+                            <input type="text" id="code" formControlName="code" class="form-control" placeholder="Code"/>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                    
+                        <div class="form-group">
+                            <input type="number" id="discountRate" formControlName="discountRate" class="form-control" placeholder="discountRate"/>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="startDate">Promo code Başlangıç Tarihi</label>
+                        <div class="form-group">
+                          <input
+                            type="date"
+                            id="startDate"
+                            formControlName="startDate"
+                            class="form-control"
+                            placeholder="Promo code Başlangıç Tarihi"
+                          />
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="finishDate">Promo code Bitiş Tarihi</label>
+                        <div class="form-group">
+                          <input
+                            type="date"
+                            id="finishDate"
+                            formControlName="finishDate"
+                            class="form-control"
+                            placeholder="Promo code Başlangıç Tarihi"
+                          />
+                        </div>
+                      </div>
+    
+                </form>
+            </div>
+            <div class="card-footer">
+                <button routerLink="/promoCodes/add"class="btn btn-fill btn-primary" (click)="addPromoCode()">Add</button>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">promoCodeId</th>
+                <th scope="col">code</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let promoCode of promoCodes">
+              
+                <td>{{promoCode.id}}</td>
+                <td>{{promoCode.code}}</td>
+                <td>
+    
+                    <div class="d-flex">
+                        <div>
+                            <a (click)="updatePromoCode(promoCode)" routerLink="" class="btn btn-primary text-right">Update..</a> 
+                        
+                            <a (click)="deletePromoCode(promoCode)" class="btn btn-danger text-right">Delete..</a>
+                            
+                        </div>
+                   </div>
+                 
+              
+                  
+                </td>
+              </tr>
+        
+            </tbody>
+          </table>
+        </div>
+</div>

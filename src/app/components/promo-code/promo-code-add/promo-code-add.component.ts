@@ -19,6 +19,9 @@ export class PromoCodeAddComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.createpromoCodeAddForm();
+    this.getPromoCodes();
+
   }
 
   createpromoCodeAddForm() {
@@ -29,5 +32,58 @@ export class PromoCodeAddComponent implements OnInit {
       finishDate: ['', Validators.required],
     });
   }
+  addPromoCode() {
+    if (this.promoCodeAddForm.valid) {
+      let promoCodeModel = Object.assign({}, this.promoCodeAddForm.value);
 
+      this.promoCodeService.addPromoCode(promoCodeModel).subscribe(
+        (response) => {
+          setTimeout(function () {
+            location.reload();
+          }, 100);
+        },
+        (responseError) => {
+          if (responseError.error.Errors.length > 0) {
+            for (let i = 0; i < responseError.error.Errors.length; i++) {}
+          }
+        }
+      );
+    }
+  }
+
+  getPromoCodes() {
+    this.promoCodeService.getPromocodes().subscribe((response) => {
+      this.promoCodes = response.data;
+    });
+  }
+  deletePromoCode(promoCodes: PromoCodeListModel) {
+    this.promoCodeService.deletePromoCode(promoCodes).subscribe((response) => {
+      setTimeout(function () {
+        location.reload();
+      }, 100);
+    });
+  }
+
+  updatePromoCode(promoCode: PromoCodeListModel) {
+    if (this.promoCodeAddForm.valid) {
+      let promoCodeModel = Object.assign({}, this.promoCodeAddForm.value);
+      promoCodeModel.id = promoCode.id;
+      this.promoCodeService.updatePromoCode(promoCode).subscribe(
+        (response) => {
+          setTimeout(function () {
+            location.reload();
+          }, 100);
+        },
+        (responseError) => {
+          if (responseError.error.Errors.length > 0) {
+          }
+        }
+      );
+    } else {
+    }
+    setTimeout(function () {
+      location.reload();
+    }, 100);
+  }
 }
+
