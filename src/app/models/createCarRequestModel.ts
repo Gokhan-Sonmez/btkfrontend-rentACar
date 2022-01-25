@@ -3,6 +3,7 @@ export interface CreateCarRequestModel{
     carName:String
     brandId:number
     colorId:number
+    cityId:number
     carClassId:number
     dailyPrice:number
     modelYear:number
@@ -10,5 +11,5 @@ export interface CreateCarRequestModel{
     kilometer:number
     description:String
     minAge:number
-    
+    imagePath:String
     }

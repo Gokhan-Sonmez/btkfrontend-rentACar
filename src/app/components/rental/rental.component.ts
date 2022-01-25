@@ -93,9 +93,10 @@ export class RentalComponent implements OnInit {
         .addRentalforindividiualcustomer(rentalModel)
         .subscribe((response) => {
           this.returnDate = this.rentalAddForm.get('returnDate').value;
-          this.getRentalCarById(this.carId);
+       
           this.addLoading = false;
           this.status = 'service';
+          this.getRentalCarById(this.carId);
           console.log(rentalModel)
         });
     }

@@ -18,6 +18,8 @@ import { CarAddComponent } from './components/car/car-add/car-add.component';
 import { BrandAddComponent } from './components/brand/brand-add/brand-add.component';
 import { ColorAddComponent } from './components/color/color-add/color-add.component';
 import { CarFilterComponent } from './components/car/car-filter/car-filter.component';
+import { PromoCodeComponent } from './components/promo-code/promo-code.component';
+import { PromoCodeAddComponent } from './components/promo-code/promo-code-add/promo-code-add.component';
 
 
 
@@ -35,7 +37,9 @@ import { CarFilterComponent } from './components/car/car-filter/car-filter.compo
     CarAddComponent,
     BrandAddComponent,
     ColorAddComponent,
-    CarFilterComponent
+    CarFilterComponent,
+    PromoCodeComponent,
+    PromoCodeAddComponent
   ],
   imports: [
     BrowserModule,

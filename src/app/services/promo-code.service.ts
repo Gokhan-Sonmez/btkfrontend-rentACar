@@ -1,7 +1,8 @@
+import { ResponseModel } from './../models/responseModel';
 import { PromoCodeListModel } from './../models/promoCodeListModel';
 import { SingleResponseModel } from './../models/singleResponseModel';
 import { ListResponseModel } from './../models/listResponseModel';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient ,HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -25,4 +26,36 @@ export class PromoCodeService {
   getByCode(code:string): Observable<SingleResponseModel<PromoCodeListModel>>{ 
     return this.httpClient.get<SingleResponseModel<PromoCodeListModel>>(this.apiUrl+"getByCode/"+code)
   }
+
+  addPromoCode(promoCode:PromoCodeListModel): Observable<ResponseModel> {
+    const httpOptions ={
+      headers:new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    }
+    let newPath = this.apiUrl+ "add"
+    return this.httpClient.post<ResponseModel>(newPath,promoCode,httpOptions);
+  }
+
+  deletePromoCode(promoCode:PromoCodeListModel): Observable<ResponseModel> {
+    const httpOptions ={
+      headers:new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    }
+    let newPath = this.apiUrl+ "delete/" + promoCode.id
+    return this.httpClient.delete<ResponseModel>(newPath,httpOptions);
+  }
+
+  updatePromoCode(promoCode:PromoCodeListModel): Observable<ResponseModel> {
+    const httpOptions ={
+      headers:new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    }
+    let newPath = this.apiUrl+ "update"
+    return this.httpClient.post<ResponseModel>(newPath,promoCode,httpOptions);
+  }
+
+
 }

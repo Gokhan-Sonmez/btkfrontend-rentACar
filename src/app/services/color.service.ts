@@ -33,8 +33,8 @@ export class ColorService {
         'Content-Type':  'application/json',
       })
     }
-    let newPath = this.apiUrl+ "delete"
-    return this.httpClient.post<ResponseModel>(newPath,color,httpOptions);
+    let newPath = this.apiUrl+ "delete/" + color.id
+    return this.httpClient.delete<ResponseModel>(newPath,httpOptions);
   }
   updateColor(color:ColorListModel): Observable<ResponseModel> {
     const httpOptions ={

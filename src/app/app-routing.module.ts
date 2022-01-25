@@ -1,3 +1,4 @@
+import { PromoCodeAddComponent } from './components/promo-code/promo-code-add/promo-code-add.component';
 import { RentalComponent } from './components/rental/rental.component';
 import { ColorAddComponent } from './components/color/color-add/color-add.component';
 import { BrandAddComponent } from './components/brand/brand-add/brand-add.component';
@@ -18,7 +19,7 @@ const routes: Routes = [
   {path:"colors/add", component:ColorAddComponent},
   {path:"cars/filter/:brandId/:colorId",component:CarComponent},
   {path:"rentals/:carId", component:RentalComponent},
-  
+  {path:"promoCodes/add", component:PromoCodeAddComponent},
 ];
 
 @NgModule({

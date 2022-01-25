@@ -30,12 +30,20 @@
                       </div>
                     </div>
                     <div class="mb-3">
-                        <label for="productName">Car Class</label>
+                        <label for="productName">City</label>
                     <div class="form-group">
+                        <select class="form-control" formControlName="cityId" required id="cityId" name="cityId">
+                          <option *ngFor="let city of cities" [value]="city.id" class="form-control">{{city.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productName">Car Class</label>
+                         <div class="form-group">
                         <select class="form-control" formControlName="carClassId" required id="carClassId" name="carClassId">
                           <option *ngFor="let carClass of carClasses" [value]="carClass.id" class="form-control">{{carClass.carClass}}</option>
                         </select>
-                      </div>
+                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="modelYear">Model Year</label>
@@ -51,7 +59,7 @@
                         <input type="number" id="dailyPrice" formControlName="dailyPrice" class="form-control" placeholder="dailyPrice"/>
     
                     </div>
-                </div>
+                    </div>
                 <div class="mb-3">
                     <label for="dailyPrice">Description</label>
                 <div class="form-group">
@@ -72,7 +80,18 @@
             <input type="number" id="minAge" formControlName="minAge" class="form-control" placeholder="minAge"/>
 
         </div>
+        
     </div>
+    <div class="mb-3">
+        <label for="imagePath">imagePath</label>
+    <div class="form-group">
+        <input type="text" id="imagePath" formControlName="imagePath" class="form-control" placeholder="imagePath"/>
+
+    </div>
+    
+</div>
+
+    
                 </form>
             </div>
             <div class="card-footer">
@@ -111,7 +130,8 @@
                 <td>
     
                     <div  class="d-flex">
-                        <a (click)="updateCar(car.id)"  class="btn btn-primary text-right">Update..</a> 
+                        <a (click)="updateCar(car)"  class="btn btn-primary text-right">Update..</a> 
+                        <a (click)="deleteCar(car)"  class="btn btn-danger text-right">Delete..</a> 
                         
                   </div>
                  

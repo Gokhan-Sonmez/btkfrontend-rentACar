@@ -1,3 +1,5 @@
+import { CityService } from './../../../services/city.service';
+import { CityListModel } from './../../../models/cityListModel';
 import { CarClassService } from './../../../services/car-class.service';
 import { CarClassListModel } from './../../../models/carClassListModel';
 import { CreateCarRequestModel } from './../../../models/createCarRequestModel';
@@ -21,6 +23,7 @@ export class CarAddComponent implements OnInit {
   carList: CarListModel[];
   brands: BrandListModel[];
   colors: ColorListModel[];
+  cities: CityListModel[];
   carClasses: CarClassListModel[];
   carAddForm: FormGroup;
   constructor(
@@ -29,6 +32,7 @@ export class CarAddComponent implements OnInit {
     private colorService: ColorService,
     private brandService: BrandService,
     private carClassService: CarClassService,
+    private cityService: CityService,
     private router: Router
   ) {}
 
@@ -38,14 +42,17 @@ export class CarAddComponent implements OnInit {
     this.getBrands();
     this.getCars();
     this. getCarClases();
+    this.getCities();
   }
 
   createCarAddForm() {
     this.carAddForm = this.formBuilder.group({
       brandId: ['', Validators.required],
       colorId: ['', Validators.required],
+      cityId: ['', Validators.required],
       carClassId: ['', Validators.required],
       carName: ['', Validators.required],
+      imagePath: ['', Validators.required],
       modelYear: ['', Validators.required],
       dailyPrice: ['', Validators.required],
       description: ['', Validators.required],
@@ -74,12 +81,18 @@ export class CarAddComponent implements OnInit {
       this.carClasses = response.data;
     });
   }
+  getCities() {
+    this.cityService.getCities().subscribe((response) => {
+      this.cities = response.data;
+    });
+  }
 
   addCar() {
     if (this.carAddForm.valid) {
       let carModel = Object.assign({}, this.carAddForm.value);
       carModel.brandId = parseInt(carModel.brandId.toString());
       carModel.colorId = parseInt(carModel.colorId.toString());
+      carModel.cityId = parseInt(carModel.cityId.toString());
       carModel.carClassId = parseInt(carModel.carClassId.toString());
 
       this.carService.addCar(carModel).subscribe((response) => {
@@ -92,10 +105,10 @@ export class CarAddComponent implements OnInit {
     }
   }
 
-  updateCar(carId:number) {
+  updateCar(car:CarListModel) {
     if (this.carAddForm.valid) {
       let carModel = Object.assign({}, this.carAddForm.value);
-      carModel.carId = carId;
+      carModel.carId = car.id;
       carModel.brandId = parseInt(carModel.brandId.toString());
       carModel.colorId = parseInt(carModel.colorId.toString());
       carModel.carClassId = parseInt(carModel.carClassId.toString());
@@ -115,13 +128,14 @@ export class CarAddComponent implements OnInit {
    
   }
 
-   //deleteCar(carId:number) {
-    // this.carService.deleteCar().subscribe((response) => {
+   deleteCar(car:CarListModel) {
+     this.carService.deleteCar(car).subscribe((response) => {
       
-   //  });
-   // setTimeout(function () {
-   //   location.reload();
-  //  }, 100);
+    });
+    setTimeout(function () {
+     location.reload();
+    }, 100);
    
   }
+}
 

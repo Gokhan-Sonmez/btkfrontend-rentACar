@@ -67,7 +67,7 @@ export class CarService {
       }),
     };
     let newPath = this.apiUrl + 'delete/' + car.id;
-    return this.httpClient.post<ResponseModel>(newPath, car, httpOptions);
+    return this.httpClient.delete<ResponseModel>(newPath, httpOptions);
   }
   updateCar(car: CreateCarRequestModel): Observable<ResponseModel> {
     const httpOptions = {

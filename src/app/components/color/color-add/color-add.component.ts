@@ -1,4 +1,3 @@
-
 import { ColorService } from './../../../services/color.service';
 import { ColorListModel } from './../../../models/colorListModel';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,10 +7,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-color-add',
   templateUrl: './color-add.component.html',
-  styleUrls: ['./color-add.component.css']
+  styleUrls: ['./color-add.component.css'],
 })
 export class ColorAddComponent implements OnInit {
-
   colorAddForm: FormGroup;
   colors: ColorListModel[];
   constructor(
@@ -39,50 +37,34 @@ export class ColorAddComponent implements OnInit {
     if (this.colorAddForm.valid) {
       let colorModel = Object.assign({}, this.colorAddForm.value);
 
-      this.colorService.addColor(colorModel).subscribe(
-        (response) => {
-       
-          setTimeout(function () {
-            location.reload();
-          }, 100);
-        },
-        
-      );
+      this.colorService.addColor(colorModel).subscribe((response) => {
+        setTimeout(function () {
+          location.reload();
+        }, 100);
+      });
     } else {
-
     }
     setTimeout(function () {
       location.reload();
     }, 100);
-
   }
 
   deleteColor(color: ColorListModel) {
-    this.colorService.deleteColor(color).subscribe((response) => {
-    
-    });
+    this.colorService.deleteColor(color).subscribe((response) => {});
     setTimeout(function () {
       location.reload();
     }, 100);
-  
   }
 
   updateColor(color: ColorListModel) {
     if (this.colorAddForm.valid) {
       let colorModel = Object.assign({}, this.colorAddForm.value);
       colorModel.id = color.id;
-      this.colorService.updateColor(colorModel).subscribe(
-        (response) => {
-         
-          setTimeout(function () {
-            location.reload();
-          }, 100);
-        },
-      
-      );
-    } 
-
-   
+      this.colorService.updateColor(colorModel).subscribe((response) => {
+        setTimeout(function () {
+          location.reload();
+        }, 100);
+      });
+    }
   }
-
 }
