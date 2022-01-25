@@ -44,6 +44,10 @@
                       class="form-control"
                       placeholder="Promosyon Kodu"
                     />
+
+                    <div *ngIf="promoCode.code" class="alert alert-success">
+                      {{promoCode.code}} uygulandı.
+                    </div>
                   </div>
                   <button
                     class="btn btn-primary"
