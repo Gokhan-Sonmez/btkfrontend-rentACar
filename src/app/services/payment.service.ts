@@ -1,3 +1,4 @@
+import { CreatePaymentModel } from './../models/createPaymentModel';
 import { TotalPriceRequestModel } from './../models/totalPriceRequestModel';
 import { ResponseModel } from './../models/responseModel';
 import { SingleResponseModel } from './../models/singleResponseModel';
@@ -24,7 +25,7 @@ export class PaymentService {
     return this.httpClient.get<SingleResponseModel<PaymentListModel>>(newPath);
   }
 
-  addPayment(payment:PaymentListModel): Observable<ResponseModel> {
+  addPayment(payment:CreatePaymentModel): Observable<ResponseModel> {
     const httpOptions ={
       headers:new HttpHeaders({
         'Content-Type':  'application/json',

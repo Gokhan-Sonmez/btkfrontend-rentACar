@@ -1,3 +1,6 @@
+import { CreatePaymentModel } from './../../models/createPaymentModel';
+import { CardService } from './../../services/card.service';
+import { ResponseModel } from './../../models/responseModel';
 import { PaymentService } from './../../services/payment.service';
 import { TotalPriceRequestModel } from './../../models/totalPriceRequestModel';
 import { SingleResponseModel } from './../../models/singleResponseModel';
@@ -17,6 +20,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CardListModel } from 'src/app/models/cardListModel';
 
 @Component({
   selector: 'app-rental',
@@ -34,6 +38,8 @@ export class RentalComponent implements OnInit {
   activeRental: RentalListModel;
   returnDate: Date;
   totalPrice: number;
+  isCardDetailSaved = false;
+  paymentLoading = false;
   status: string = 'rental';
   promoCode: PromoCodeListModel;
   constructor(
@@ -45,6 +51,7 @@ export class RentalComponent implements OnInit {
     private additionalServiceService: AdditionalServiceService,
     private additionalServiceItemService: AdditionalServiceItemService,
     private paymentService: PaymentService,
+    private cardService:CardService
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +89,38 @@ export class RentalComponent implements OnInit {
       Validators.maxLength(30),
     ]),
   });
-
+//payment add form
+paymentAddForm = new FormGroup({
+  nameOnTheCard: new FormControl('', [
+    Validators.required,
+    Validators.minLength(2),
+    Validators.maxLength(250),
+  ]),
+  cardNumber: new FormControl('', [
+    Validators.required,
+    Validators.minLength(16),
+    Validators.maxLength(16),
+    Validators.pattern(/^[0-9]\d*$/),
+  ]),
+  month: new FormControl('', [
+    Validators.required,
+    Validators.minLength(2),
+    Validators.maxLength(2),
+    Validators.pattern(/^[0-9]\d*$/),
+  ]),
+  year: new FormControl('', [
+    Validators.required,
+    Validators.minLength(2),
+    Validators.maxLength(2),
+    Validators.pattern(/^[0-9]\d*$/),
+  ]),
+  cvv: new FormControl('', [
+    Validators.required,
+    Validators.minLength(3),
+    Validators.maxLength(3),
+    Validators.pattern(/^[0-9]\d*$/),
+  ]),
+});
   addRental() {
     if (this.rentalAddForm.valid) {
       let rentalModel = Object.assign({}, this.rentalAddForm.value);
@@ -157,16 +195,25 @@ export class RentalComponent implements OnInit {
   addAdditionalServices() {
     if (this.additionalServiceItemBasket.length < 1) {
       this.status = 'payment';
-
+      this.calculateTotalPrice();
       return;
     }
     this.additionalServiceService
       .add(this.additionalServiceItemBasket)
-      .subscribe((response) => {
-        if (response.success) {
-          this.status = 'payment';
+      .subscribe(
+        (response) => {
+          if (response.success) {
+            this.status = 'payment';
+            this.calculateTotalPrice();
+   //         this.toastrService.success(response.message, 'Başarılı');
+          } else {
+            this.toastrService.warning(response.message, 'Başarısız');
+          }
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.toastrService.error(errorResponse.message, 'Başarısız');
         }
-      });
+      );
   }
 
   getRentalById(id: number) {
@@ -222,5 +269,51 @@ export class RentalComponent implements OnInit {
       }
     );
   }
- 
+ //sends payment request
+ addPayment() {
+  this.paymentLoading = true;
+  let createPaymentModel: CreatePaymentModel = Object.assign(
+    {},
+    this.paymentAddForm.value
+  );
+  createPaymentModel.rentalId = this.activeRental.id;
+  createPaymentModel.returnDate = this.returnDate;
+  this.paymentService.addPayment(createPaymentModel).subscribe(
+    (response: ResponseModel) => {
+      if (response.success) {
+        this.paymentLoading = false;
+        this.status = 'success';
+    //    this.toastrService.success(response.message, 'Başarılı');
+      } else {
+        this.toastrService.warning(response.message, 'Başarısız');
+        this.paymentLoading = false;
+      }
+    },
+    (errorResponse: HttpErrorResponse) => {
+      this.toastrService.error(errorResponse.message, 'Başarısız');
+      this.paymentLoading = false;
+    }
+  );
+  this.paymentLoading = false;
+}
+
+addCustomerCardDetail() {
+  let createCustomerCardDetailModel: CardListModel =
+    Object.assign({}, this.paymentAddForm.value);
+  createCustomerCardDetailModel.customerId = 1;
+  this.cardService.addCard(createCustomerCardDetailModel).subscribe(
+    (response: ResponseModel) => {
+      if (response.success) {
+        this.isCardDetailSaved = true;
+
+        this.toastrService.success(response.message, 'Başarılı');
+      } else {
+        this.toastrService.warning(response.message, 'Başarısız');
+      }
+    },
+    (errorResponse: HttpErrorResponse) => {
+      this.toastrService.error(errorResponse.message, 'Başarısız');
+    }
+  );
+}
 }

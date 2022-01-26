@@ -69,15 +69,67 @@
                   <button *ngIf="isBasketContainItem(additionalServiceItem.id)" class="btn btn-danger"
                     (click)="removeAdditionalServiceItem(additionalServiceItem.id)"><i
                       class="far fa-trash-alt"></i></button>
-                </li>
-              </ul>
-              <button class="btn btn-success">Ödemeye Geç</button>
+                    </li>
+                  </ul>
+                <button class="btn btn-success" (click)="addAdditionalServices()">Ödemeye Geç</button>
+              </div>
+  
             </div>
-
           </div>
         </div>
+  
+        <!--Payment -->
+        <div *ngIf="status=='payment'" class="card" style="margin-top:4%">
+          <div class="card-header">
+            <h5 class="title">Ödeme</h5>
+          </div>
+          <div class="card-header">
+            <h5 class="title">{{"Toplam Ücret: " + totalPrice +" TRY"}}</h5>
+          </div>
+  
+          <div class="card-body">
+            <form [formGroup]="paymentAddForm">
+              <div class="row g-3">
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" placeholder="İsim Soyisim" aria-label="nameOnTheCard"
+                    formControlName="nameOnTheCard">
+                </div>
+                <div class="col-sm-3">
+                  <input type="text" class="form-control" placeholder="Kart Numarası" aria-label="cardNumber"
+                    formControlName="cardNumber">
+                </div>
+                <div class="col-sm-2">
+                  <input type="text" class="form-control" placeholder="Ay" aria-label="month" formControlName="month">
+                </div>
+                <div class="col-sm-2">
+                  <input type="text" class="form-control" placeholder="Yıl" aria-label="year" formControlName="year">
+                </div>
+                <div class="col-sm-2">
+                  <input type="text" class="form-control" placeholder="CVV" aria-label="cvv" formControlName="cvv">
+                </div>
+                <div class="col-sm">
+                  <button (click)="addCustomerCardDetail()" *ngIf="!isCardDetailSaved" class="btn btn-primary"
+                    [disabled]="paymentAddForm.invalid">Kaydet</button>
+                </div>
+  
+              </div>
+            </form>
+          </div>
+  
+          <div class="card-footer">
+            <button *ngIf="!paymentLoading" class="btn btn-fill btn-primary" (click)="addPayment()"
+              [disabled]="paymentAddForm.invalid">Öde</button>
+            <button *ngIf="paymentLoading" class="btn btn-primary" type="button" disabled>
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Gönderiliyor...
+            </button>
+          </div>
+        </div>
+        <!--Success-->
+        <div *ngIf="status=='success'" class="alert alert-secondary" role="alert" style="margin-top:4%">
+          Tüm İşlemler Başarılı 
+        </div>
       </div>
-    </div>
 
     <div class="col-4">
       <!-- Summary-->
