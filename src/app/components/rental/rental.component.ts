@@ -160,6 +160,7 @@ paymentAddForm = new FormGroup({
       if (response.success) {
         console.log(response.data);
         this.promoCode = response.data;
+        this.toastrService.success(response.message, 'Başarılı');
       }
     });
   }
